@@ -109,7 +109,7 @@ async def send_motivation_message(message: types.Message):
 
 # Функция формирования запроса для мотивации в зависимости от нажатой кнопки
 async def process_motivation_callback(callback_query: types.CallbackQuery):
-    prompt = "Бот, напиши несколько слов мотивации " + callback_query.data
+    prompt = "Бот, напиши девушке несколько слов мотивации " + callback_query.data
     response_text = generate_response(prompt)
     message = await callback_query.message.answer(response_text)
     return (prompt)
@@ -148,7 +148,8 @@ async def process_magicball_callback(callback_query: types.CallbackQuery):
 
 # Функция для генерации рандомного ответа из двух списков 'first' и 'second'
 def generate_random():
-    with open("lists.txt", "r", encoding="utf-8") as f:
+    file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "lists.txt"))
+    with open(file_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
     first = [line.strip() for line in lines if line.startswith("first:")]
     second = [line.strip() for line in lines if line.startswith("second:")]
@@ -190,7 +191,7 @@ async def send_info_message(message: types.Message):
     keyboard.add(
         InlineKeyboardButton("Telegram", url="https://t.me/Niko_from_Niko"),
         InlineKeyboardButton("VK", url="https://vk.com/nikohaker"),
-        InlineKeyboardButton("\U0001F63C GitHub", url="https://github.com/nikohakerinc/")
+        InlineKeyboardButton("\U0001F63C GitHub", url="https://github.com/nikohakerinc/OptimisticLadyBot")
         
     )
     await message.answer('''@OptimisticLadyBot V.2.0''', parse_mode=types.ParseMode.HTML, reply_markup=keyboard)
