@@ -116,16 +116,13 @@ async def process_motivation_callback(callback_query: types.CallbackQuery):
 
 # Функция отправки запроса в OpenAI и получения ответа
 def generate_response(prompt):
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt,
-        temperature=0.5,
-        max_tokens=1000,
-        top_p=1.0,
-        frequency_penalty=0.5,
-        presence_penalty=0.0
-    )
-    return response["choices"][0]["text"]
+        completion = openai.ChatCompletion.create(
+  model="gpt-3.5-turbo",
+  messages=[
+    {"role": "user", "content": prompt}
+  ]
+)
+        return completion.choices[0].message.content
 
 # Функция для обработки нажатия на кнопки Magic_ball
 async def send_magicball_message(message: types.Message):
