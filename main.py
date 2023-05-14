@@ -12,9 +12,9 @@ from aiogram.utils import executor
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from datetime import datetime
-import settings
-settings.init()
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # Задаем уровень логов
 if not os.path.exists('/tmp/mainbot_log/'):
@@ -28,8 +28,8 @@ logging.basicConfig(filename='/tmp/mainbot_log/info.log', level=logging.INFO,
 
 # Инициализация бота
 storage = MemoryStorage()
-openai.api_key = settings.openai
-bot = Bot(token=settings.tg_token)
+openai.api_key = os.getenv('APIKEY')
+bot = Bot(token=os.getenv('TOKEN'))
 dp = Dispatcher(bot, storage=storage)
 
 # Функция для получения текущего времени в определенном часовом поясе
@@ -116,16 +116,13 @@ async def process_motivation_callback(callback_query: types.CallbackQuery):
 
 # Функция отправки запроса в OpenAI и получения ответа
 def generate_response(prompt):
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt,
-        temperature=0.5,
-        max_tokens=1000,
-        top_p=1.0,
-        frequency_penalty=0.5,
-        presence_penalty=0.0
-    )
-    return response["choices"][0]["text"]
+        completion = openai.ChatCompletion.create(
+  model="gpt-3.5-turbo",
+  messages=[
+    {"role": "user", "content": prompt}
+  ]
+)
+        return completion.choices[0].message.content
 
 # Функция для обработки нажатия на кнопки Magic_ball
 async def send_magicball_message(message: types.Message):
