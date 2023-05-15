@@ -17,13 +17,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Задаем уровень логов
-if not os.path.exists('/tmp/mainbot_log/'):
-    os.makedirs('/tmp/mainbot_log/')
+log_dir = os.path.join(os.path.dirname(__file__), 'LadyBot_Log')
 
-logging.basicConfig(filename='/tmp/mainbot_log/error.log', level=logging.ERROR,
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
+
+logging.basicConfig(filename=os.path.join(log_dir, 'error.log'), level=logging.ERROR,
                     format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
-logging.basicConfig(filename='/tmp/mainbot_log/info.log', level=logging.INFO,
+logging.basicConfig(filename=os.path.join(log_dir, 'info.log'), level=logging.INFO,
                     format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 # Инициализация бота
@@ -191,7 +193,7 @@ async def send_info_message(message: types.Message):
         InlineKeyboardButton("\U0001F63C GitHub", url="https://github.com/nikohakerinc/OptimisticLadyBot")
         
     )
-    await message.answer('''@OptimisticLadyBot V.2.0''', parse_mode=types.ParseMode.HTML, reply_markup=keyboard)
+    await message.answer('''@OptimisticLadyBot V.2.1''', parse_mode=types.ParseMode.HTML, reply_markup=keyboard)
     
 # Добавляем хендлеры (обработчики)
 dp.register_message_handler(send_welcome_message, commands=["start"])
