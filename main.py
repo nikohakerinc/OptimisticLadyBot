@@ -164,14 +164,14 @@ class DreamForm(StatesGroup):
 async def send_dream_prompt(message: types.Message, state: FSMContext):
     await message.answer("Коротко опиши свой сон:")
     await DreamForm.prompt.set()  # Установка состояния пользователя в "prompt"
-    
+
 # Функция "расшифровки" значения сна с помощью OpenAI
 async def process_dream_text(message: types.Message, state: FSMContext):
     prompt = "Бот, мне приснилось " + message.text + ". Что это значит?"
     response_text = generate_response(prompt)
     await message.answer(response_text)
     await state.finish()  # Сброс состояния пользователя
-  
+
 # Функция для обработки нажатия на кнопку Playlist
 async def send_playlist_message(message: types.Message):
     keyboard = InlineKeyboardMarkup(row_width=1)
@@ -183,18 +183,17 @@ async def send_playlist_message(message: types.Message):
         InlineKeyboardButton("\U0001F50A Сбер Звук", url="https://zvuk.com/waves"),
     )
     await message.reply("Выбери музыкальный сервис", reply_markup=keyboard)
-  
+
 # Функция для обработки нажатия на кнопки Info
 async def send_info_message(message: types.Message):
     keyboard = InlineKeyboardMarkup(row_width=2)
     keyboard.add(
         InlineKeyboardButton("Telegram", url="https://t.me/Niko_from_Niko"),
         InlineKeyboardButton("VK", url="https://vk.com/nikohaker"),
-        InlineKeyboardButton("\U0001F63C GitHub", url="https://github.com/nikohakerinc/OptimisticLadyBot")
-        
+        InlineKeyboardButton("\U0001F63C GitHub", url="https://github.com/nikohakerinc/OptimisticLadyBot"),
     )
     await message.answer('''@OptimisticLadyBot V.2.1''', parse_mode=types.ParseMode.HTML, reply_markup=keyboard)
-    
+
 # Добавляем хендлеры (обработчики)
 dp.register_message_handler(send_welcome_message, commands=["start"])
 dp.register_message_handler(send_horoscope_message, commands=['horoscope'])
@@ -212,5 +211,5 @@ dp.register_message_handler(send_info_message, commands=['info'])
 #Запуск бота
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
-    
+
 print ('Bot stoping!')
