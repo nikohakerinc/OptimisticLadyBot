@@ -1,0 +1,15 @@
+version: '3'
+services:
+  LadyBot:
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - '.:/opt/LadyBot'
+    environment:
+      - APIKEY=${APIKEY}
+      - TOKEN=${TOKEN}
+    command: >
+      sh -c "python /opt/LadyBot/main.py"
+    container_name: OptimisticLadyBot
+    image: optiladybot
