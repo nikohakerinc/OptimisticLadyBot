@@ -1,4 +1,4 @@
-import os
+import os                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 import openai
 import logging
 import requests
@@ -23,10 +23,7 @@ if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
 logging.basicConfig(filename=os.path.join(log_dir, 'error.log'), level=logging.ERROR,
-                    format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
-
-logging.basicConfig(filename=os.path.join(log_dir, 'info.log'), level=logging.INFO,
-                    format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+                    format='%(levelname)s: %(asctime)s %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
 
 # Инициализация бота
 storage = MemoryStorage()
