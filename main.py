@@ -1,4 +1,4 @@
-import os                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+import os
 import openai
 import logging
 import requests
@@ -189,7 +189,21 @@ async def send_info_message(message: types.Message):
         InlineKeyboardButton("VK", url="https://vk.com/nikohaker"),
         InlineKeyboardButton("\U0001F63C GitHub", url="https://github.com/nikohakerinc/OptimisticLadyBot"),
     )
-    await message.answer('''@OptimisticLadyBot V.2.1''', parse_mode=types.ParseMode.HTML, reply_markup=keyboard)
+
+    release_notes = '''
+Version 2.1 от 15.05.2023г
+
+RELEASE NOTES
+
+🔨 Исправлены мелкие баги и недочёты
+
+🧱 Оптимизирован код
+
+🔼 Изменена генеративная языковая модель используемая в разделе "💪Мотивация" и "💭Толкование снов"
+'''
+
+    await message.answer(release_notes, parse_mode=types.ParseMode.HTML, reply_markup=keyboard)
+
 
 # Добавляем хендлеры (обработчики)
 dp.register_message_handler(send_welcome_message, commands=["start"])
